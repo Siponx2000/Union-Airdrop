@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airdrop Checker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #87701d;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .logo {
+      text-align: left;
+      margin-left: 10px;
+      font-weight: bold;
+      font-size: 24px;
+    }
+    .box {
+      background: #f5f5f5;
+      color: #000;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 18px;
+    }
+    .title {
+      font-size: 28px;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    .total {
+      background: #333;
+      color: #ffeb3b;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 20px;
+    }
+    .claim-button {
+      background-color: #333;
+      color: #ffeb3b;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .input {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+      border: none;
+      font-size: 16px;
+    }
+    .character {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      max-height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">UNION</div>
+  <div class="container">
+    <div class="title">CLAIM YOUR $U AIRDROP</div>
+
+    <input type="text" id="wallet" placeholder="Enter wallet address" class="input" />
+    <input type="text" id="twitter" placeholder="Enter Twitter username" class="input" />
+    <input type="text" id="discord" placeholder="Enter Discord username" class="input" />
+
+    <div class="box">WALLET <span id="walletAmount">0 $U</span></div>
+    <div class="box">TWITTER <span id="twitterAmount">0 $U</span></div>
+    <div class="box">DISCORD <span id="discordAmount">0 $U</span></div>
+    <div class="box">NFT COMMUNITY <span id="nftAmount">0 $U</span></div>
+
+    <div class="total">TOTAL ALOCATION <span id="totalAmount">0 $U</span></div>
+    <button class="claim-button" onclick="generateAirdrop()">CLAIM</button>
+  </div>
+  <img src="UNION.png" class="character" />
+
+  <script>
+    function hashCode(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash);
+    }
+
+    function getRandomFromHash(hash, min, max) {
+      return min + (hash % (max - min + 1));
+    }
+
+    function generateAirdrop() {
+      const wallet = document.getElementById("wallet").value;
+      const twitter = document.getElementById("twitter").value;
+      const discord = document.getElementById("discord").value;
+
+      const walletAmount = getRandomFromHash(hashCode(wallet), 1000, 5000);
+      const twitterAmount = getRandomFromHash(hashCode(twitter), 6000, 12000);
+      const discordAmount = getRandomFromHash(hashCode(discord), 3000, 5000);
+      const nftAmount = getRandomFromHash(
+        hashCode(wallet + twitter + discord),
+        2000,
+        7000
+      );
+
+      const total = walletAmount + twitterAmount + discordAmount + nftAmount;
+
+      document.getElementById("walletAmount").textContent = walletAmount + " $U";
+      document.getElementById("twitterAmount").textContent = twitterAmount + " $U";
+      document.getElementById("discordAmount").textContent = discordAmount + " $U";
+      document.getElementById("nftAmount").textContent = nftAmount + " $U";
+      document.getElementById("totalAmount").textContent = total + " $U";
+    }
+  </script>
+</body>
+</html>
